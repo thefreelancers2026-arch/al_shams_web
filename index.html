@@ -1,0 +1,713 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Al Shams Traders | Pure Classic Elegance</title>
+    <meta name="description" content="Premium tiles, best price, huge collection, same-day delivery.">
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400;0,6..96,500;1,6..96,400&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/feather-icons"></script>
+
+    <style>
+        :root {
+            --bg-dark: #100C0A; 
+            --bg-card: #15110E; 
+            --gold: #C5A059; 
+            --gold-hover: #DDB76D;
+            --text-main: #F4EBE1; 
+            --text-muted: #8C847A; 
+            --border: rgba(197, 160, 89, 0.2); 
+            
+            --font-serif: 'Bodoni Moda', serif;
+            --font-sans: 'Montserrat', sans-serif;
+            
+            --transition: all 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        html, body { 
+            overflow-x: hidden; width: 100%; max-width: 100vw; scroll-behavior: smooth; 
+        }
+        
+        body {
+            background-color: var(--bg-dark);
+            color: var(--text-main);
+            font-family: var(--font-sans);
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        h1, h2, h3, h4, .serif { font-family: var(--font-serif); font-weight: 400; }
+        a { text-decoration: none; color: inherit; }
+        ul { list-style: none; }
+
+        .container { width: 90%; max-width: 1400px; margin: 0 auto; }
+        section { padding: 8rem 0; }
+        .gold-italic { color: var(--gold); font-style: italic; }
+
+        /* --------------------------
+           NAVIGATION
+        -------------------------- */
+        .top-nav {
+            position: fixed; top: 0; left: 0; width: 100%; padding: 1.2rem 0;
+            background: rgba(16, 12, 10, 0.95); backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--border); z-index: 2000;
+        }
+        
+        .nav-content { display: flex; justify-content: space-between; align-items: center; }
+        .store-name { font-family: var(--font-serif); font-size: 1.6rem; letter-spacing: 0.15em; color: var(--gold); text-transform: uppercase; }
+        
+        .nav-actions { display: flex; align-items: center; gap: 2rem; }
+        
+        .nav-btn {
+            display: flex; align-items: center; gap: 0.5rem;
+            font-family: var(--font-sans); font-size: 0.75rem; letter-spacing: 0.15em;
+            text-transform: uppercase; color: var(--text-main); transition: color 0.3s;
+            cursor: pointer; background: none; border: none; outline: none;
+        }
+        .nav-btn:hover { color: var(--gold); }
+        .wish-count-badge { color: var(--gold); font-weight: 500; }
+
+        .btn-catalogue-nav {
+            border: 1px solid var(--gold); padding: 0.6rem 1.2rem; color: var(--gold);
+            border-radius: 2px; transition: var(--transition);
+        }
+        .btn-catalogue-nav:hover { background: var(--gold); color: var(--bg-dark); }
+
+        .btn {
+            display: inline-flex; align-items: center; justify-content: center;
+            padding: 1.2rem 2.5rem; font-family: var(--font-sans); font-size: 0.75rem;
+            text-transform: uppercase; letter-spacing: 0.25em; cursor: pointer;
+            transition: var(--transition); font-weight: 500;
+        }
+        .btn-gold { background-color: var(--gold); color: var(--bg-dark); border: 1px solid transparent; }
+        .btn-gold:hover { background-color: var(--gold-hover); transform: translateY(-2px); box-shadow: 0 10px 30px rgba(197, 160, 89, 0.2); }
+        .btn-outline { border: 1px solid var(--text-main); color: var(--text-main); background: transparent; }
+        .btn-outline:hover { background-color: var(--text-main); color: var(--bg-dark); }
+
+        /* --------------------------
+           1. HERO
+        -------------------------- */
+        .hero { position: relative; height: 100vh; display: flex; align-items: center; justify-content: center; text-align: center; padding: 0; overflow: hidden; }
+        .hero::before { content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(to bottom, rgba(16,12,10,0.6) 0%, rgba(16,12,10,0.95) 100%); z-index: 1; }
+        .hero-bg { position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; z-index: 0; animation: slowZoom 25s infinite alternate linear; }
+        @keyframes slowZoom { 0% { transform: scale(1); } 100% { transform: scale(1.15); } }
+
+        .hero-content { position: relative; z-index: 2; max-width: 1000px; padding: 0 2rem; margin-top: 5rem; }
+        .hero-content h1 { font-size: clamp(3rem, 7vw, 6.5rem); line-height: 1.1; margin-bottom: 1.5rem; letter-spacing: -0.02em; }
+        .hero-content p { font-size: clamp(0.85rem, 1.5vw, 1rem); color: var(--text-muted); margin-bottom: 3.5rem; letter-spacing: 0.2em; text-transform: uppercase; font-weight: 400; }
+        .hero-buttons { display: flex; gap: 1.5rem; justify-content: center; flex-wrap: wrap; }
+
+        /* --------------------------
+           2. TRUST BAR
+        -------------------------- */
+        .trust-bar { padding: 4rem 0; border-bottom: 1px solid var(--border); border-top: 1px solid var(--border); background-color: var(--bg-card); }
+        .trust-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 2rem; text-align: center; }
+        .trust-item { display: flex; flex-direction: column; align-items: center; gap: 1rem; padding: 0 1rem; border-right: 1px solid var(--border); }
+        .trust-item:last-child { border-right: none; }
+        .trust-item h3 { color: var(--gold); font-family: var(--font-serif); font-size: 1.8rem; letter-spacing: 0.05em; }
+        .trust-item p { font-family: var(--font-sans); font-size: 0.65rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.25em; font-weight: 500; }
+
+        /* --------------------------
+           3. COLLECTION SHOWCASE
+        -------------------------- */
+        .section-header { text-align: center; margin-bottom: 4rem; }
+        .section-header h2 { font-size: clamp(2.5rem, 5vw, 4rem); margin-bottom: 1rem; }
+        .section-header .gold-line { width: 60px; height: 1px; background-color: var(--gold); margin: 0 auto; }
+
+        .category-filters { display: flex; justify-content: center; gap: 1.5rem; margin-bottom: 3rem; flex-wrap: wrap; }
+        .filter-btn {
+            background: transparent; border: 1px solid rgba(197, 160, 89, 0.2); color: var(--text-muted);
+            padding: 0.8rem 2rem; font-family: var(--font-sans); font-size: 0.75rem;
+            text-transform: uppercase; letter-spacing: 0.15em; cursor: pointer; transition: var(--transition); border-radius: 4px;
+        }
+        .filter-btn:hover, .filter-btn.active { border-color: var(--gold); color: var(--gold); }
+
+        .collection-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 2rem; }
+        
+        .collection-card { position: relative; height: 450px; overflow: hidden; border: 1px solid var(--border); cursor: pointer; }
+        .collection-card img { width: 100%; height: 100%; object-fit: cover; transition: transform 1.5s cubic-bezier(0.25, 1, 0.5, 1); }
+        .collection-card::after { content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(to top, rgba(16,12,10,0.95) 0%, transparent 50%); pointer-events: none; }
+        .collection-card:hover img { transform: scale(1.05); }
+
+        .collection-info { position: absolute; bottom: 2rem; left: 2rem; z-index: 2; pointer-events: none; }
+        .collection-info h3 { font-size: 1.8rem; margin-bottom: 0.3rem; transition: var(--transition); color: var(--text-main); }
+        .collection-info p { color: var(--gold); font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.2em; opacity: 0; transform: translateY(10px); transition: var(--transition); }
+        
+        .collection-card:hover .collection-info h3 { transform: translateY(-5px); color: var(--gold); }
+        .collection-card:hover .collection-info p { opacity: 1; transform: translateY(0); }
+
+        .wishlist-heart-btn {
+            position: absolute; top: 20px; right: 20px; z-index: 10;
+            background: rgba(16,12,10,0.5); backdrop-filter: blur(5px);
+            border: 1px solid var(--border); border-radius: 50%;
+            width: 40px; height: 40px; display: flex; align-items: center; justify-content: center;
+            color: var(--text-main); cursor: pointer; transition: var(--transition);
+        }
+        .wishlist-heart-btn:hover { background: rgba(197, 160, 89, 0.2); border-color: var(--gold); color: var(--gold); }
+        .wishlist-heart-btn.liked { color: var(--bg-dark); background: var(--gold); border-color: var(--gold); }
+        .wishlist-heart-btn.liked svg { fill: var(--bg-dark); stroke: var(--bg-dark); }
+
+        /* --------------------------
+           4. CATALOGUE LEAD MAGNET
+        -------------------------- */
+        .catalogue-magnet {
+            background-color: var(--bg-card); text-align: center; border-top: 1px solid var(--border);
+            border-bottom: 1px solid var(--border); padding: 8rem 0; position: relative;
+        }
+        .catalogue-magnet::before { content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: url('images/hero_bg.png') center/cover; opacity: 0.05; z-index: 0; }
+        .magnet-content { position: relative; z-index: 1; max-width: 800px; margin: 0 auto; }
+        .magnet-content h2 { font-size: clamp(2rem, 5vw, 3.5rem); margin-bottom: 1.5rem; color: var(--gold); }
+        .magnet-content p { font-size: 1.1rem; color: var(--text-muted); margin-bottom: 3rem; font-weight: 300; }
+
+        /* --------------------------
+           5. BRAND STORY
+        -------------------------- */
+        .story { text-align: center; }
+        .story-content { max-width: 900px; margin: 0 auto; }
+        .story h2 { font-size: clamp(2.5rem, 6vw, 4.5rem); line-height: 1.3; color: var(--gold); margin-bottom: 2rem; font-style: italic; }
+        .story p { font-size: 1.1rem; color: var(--text-muted); font-weight: 300; }
+
+        /* --------------------------
+           6. ENQUIRY SECTION
+        -------------------------- */
+        .enquiry-section { background-color: var(--bg-card); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); text-align: center; padding: 8rem 0; }
+        .enquiry-wrapper { max-width: 700px; margin: 0 auto; }
+        .form-row { display: flex; gap: 3rem; margin-bottom: 2rem; }
+        .form-group { flex: 1; text-align: left; position: relative; }
+        .form-group label { display: block; margin-bottom: 0.5rem; font-size: 0.65rem; font-weight: 500; text-transform: uppercase; letter-spacing: 0.2em; color: var(--gold); }
+        .form-control { width: 100%; padding: 0.8rem 0; background: transparent; border: none; border-bottom: 1px solid rgba(255,255,255,0.2); color: var(--text-main); font-family: var(--font-sans); font-size: 1rem; font-weight: 300; outline: none; transition: all 0.3s ease; }
+        .form-control:focus { border-bottom-color: var(--gold); }
+
+        /* --------------------------
+           7. SHOWROOM EXPERIENCE
+        -------------------------- */
+        .showroom { overflow: hidden; padding-bottom: 8rem; }
+        .horizontal-scroll { display: flex; gap: 2rem; overflow-x: auto; padding: 0 4%; width: 100%; box-sizing: border-box; scroll-snap-type: x mandatory; scrollbar-width: none; cursor: grab; }
+        .horizontal-scroll::-webkit-scrollbar { display: none; }
+        .showroom-item { min-width: 600px; height: 400px; scroll-snap-align: center; border: 1px solid var(--border); overflow: hidden; flex-shrink: 0; position: relative; }
+        .showroom-item img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.8s; }
+        .showroom-item:hover img { transform: scale(1.05); }
+
+        /* --------------------------
+           8. REVIEWS CAROUSEL
+        -------------------------- */
+        .reviews { background-color: var(--bg-dark); border-top: 1px solid var(--border); padding: 8rem 0; }
+        .reviews-wrapper { display: flex; overflow-x: auto; scroll-snap-type: x mandatory; gap: 2.5rem; padding-bottom: 2rem; scrollbar-width: none; }
+        .reviews-wrapper::-webkit-scrollbar { display: none; }
+        .review-card { min-width: 400px; flex: 1; background: var(--bg-card); padding: 4rem 3rem; scroll-snap-align: start; border: 1px solid var(--border); }
+        .stars { margin-bottom: 2rem; display: flex; gap: 0.3rem; }
+        .review-text { font-family: var(--font-serif); font-size: 1.4rem; font-style: italic; line-height: 1.6; margin-bottom: 2.5rem; color: var(--text-main); }
+        .review-author { font-family: var(--font-sans); font-weight: 500; color: var(--gold); font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.25em; }
+
+        /* --------------------------
+           9. LOCATION & FOOTER
+        -------------------------- */
+        footer { background-color: var(--bg-card); padding: 6rem 0 3rem; border-top: 1px solid var(--border); }
+        .footer-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 5rem; margin-bottom: 4rem; }
+        .footer-col h3 { font-size: 2.5rem; color: var(--gold); margin-bottom: 1.5rem; }
+        .footer-col p { color: var(--text-muted); margin-bottom: 1.2rem; display: flex; align-items: flex-start; gap: 1rem; font-size: 1rem; }
+        .map-container { width: 100%; height: 350px; border: 1px solid var(--border); overflow: hidden; filter: grayscale(100%) invert(90%) contrast(120%); }
+        .footer-bottom { text-align: center; padding-top: 3rem; border-top: 1px solid var(--border); color: var(--text-muted); font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.25em; }
+
+        /* --------------------------
+           Floating UI Elements
+        -------------------------- */
+        .sticky-wa {
+            position: fixed; bottom: 30px; left: 30px; 
+            width: 60px; height: 60px; border-radius: 50%; display: flex; align-items: center; justify-content: center;
+            z-index: 1000; transition: var(--transition); background: rgba(255, 255, 255, 0.03); backdrop-filter: blur(12px); border: 1px solid var(--gold); color: var(--gold);
+        }
+        .sticky-wa:hover { transform: scale(1.1); background: var(--gold); color: var(--bg-dark); }
+
+        .toast {
+            position: fixed; bottom: -100px; left: 50%; transform: translateX(-50%);
+            background: var(--gold); color: var(--bg-dark); padding: 1rem 2rem; border-radius: 4px;
+            font-family: var(--font-sans); font-weight: 500; font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.15em;
+            z-index: 4000; transition: bottom 0.5s cubic-bezier(0.25, 1, 0.5, 1); box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            display: flex; align-items: center; gap: 0.5rem;
+        }
+        .toast.show { bottom: 40px; }
+
+        /* --------------------------
+           MODALS
+        -------------------------- */
+        .sidebar-modal {
+            position: fixed; top: 0; right: -500px; width: 450px; height: 100vh;
+            background-color: var(--bg-card); border-left: 1px solid var(--border); z-index: 3000;
+            transition: right 0.6s cubic-bezier(0.25, 1, 0.5, 1); display: flex; flex-direction: column;
+        }
+        .sidebar-modal.open { right: 0; }
+        
+        .overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.8); z-index: 2999; opacity: 0; visibility: hidden; transition: var(--transition); }
+        .overlay.open { opacity: 1; visibility: visible; }
+
+        .modal-header { padding: 2rem; border-bottom: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center; }
+        .modal-header h2 { font-size: 1.8rem; color: var(--gold); }
+        .close-modal { background: none; border: none; color: var(--text-main); cursor: pointer; transition: color 0.3s; }
+        .close-modal:hover { color: var(--gold); }
+
+        .wishlist-items { flex: 1; overflow-y: auto; padding: 2rem; display: flex; flex-direction: column; gap: 1rem; }
+        .wish-item { display: flex; gap: 1.5rem; align-items: center; background: var(--bg-dark); padding: 1.5rem; border: 1px solid var(--border); }
+        .wish-item img { width: 60px; height: 60px; object-fit: cover; }
+        .wish-item-info { flex: 1; }
+        .wish-item-info h4 { font-family: var(--font-serif); font-size: 1.2rem; }
+        .wish-item-info p { font-size: 0.65rem; color: var(--gold); text-transform: uppercase; margin-top:0.3rem; letter-spacing: 0.1em; }
+        .remove-btn { background: none; border: none; color: #DC2626; cursor: pointer; }
+        
+        .checkout-box { padding: 2rem; border-top: 1px solid var(--border); background: var(--bg-dark); }
+        .checkout-box p.title { margin-bottom: 0.5rem; font-size: 0.8rem; font-weight: 500; text-transform:uppercase; letter-spacing:0.15em; color:var(--text-main); text-align:center; }
+        .checkout-box p.subtitle { margin-bottom: 2rem; font-size: 0.7rem; color: var(--text-muted); text-align: center; }
+
+        /* Responsive Modifications */
+        @media (max-width: 1024px) {
+            .trust-grid { grid-template-columns: repeat(2, 1fr); gap: 3rem 0; }
+            .trust-item:nth-child(2) { border-right: none; }
+            .showroom-item { min-width: 400px; }
+            .footer-grid { grid-template-columns: 1fr; gap: 4rem; }
+            .sidebar-modal { width: 100%; right: -100%; }
+        }
+
+        @media (max-width: 768px) {
+            .nav-actions { gap: 1rem; }
+            .nav-contact-text, .wish-text { display: none; }
+            /* Hide the border on mobile nav buttons if text is gone to look like pure icons */
+            .btn-catalogue-nav { border: none; padding: 0.5rem; }
+            
+            .collection-grid { grid-template-columns: 1fr; }
+            .form-row { flex-direction: column; gap: 1.5rem; }
+            .trust-grid { grid-template-columns: 1fr; }
+            .trust-item { border-right: none; border-bottom: 1px solid var(--border); padding: 2.5rem 0; }
+            .trust-item:last-child { border-bottom: none; }
+            .showroom-item { min-width: 85vw; height: 300px; }
+            .review-card { min-width: 320px; padding: 3rem 2rem; }
+            .hero-content h1 { font-size: 3rem; }
+            
+            /* Adjust floating UI for mobile */
+            .sticky-wa { bottom: 20px; left: 20px; width: 50px; height: 50px; }
+            .toast { width: 90%; text-align: center; padding: 1rem; }
+            
+            /* Make category filters perfectly fit without stretching */
+            .category-filters { gap: 0.5rem; }
+            .filter-btn { padding: 0.6rem 1rem; font-size: 0.65rem; }
+        }
+
+        .reveal { opacity: 0; transform: translateY(30px); transition: all 1s cubic-bezier(0.25, 1, 0.5, 1); }
+        .reveal.active { opacity: 1; transform: translateY(0); }
+    </style>
+</head>
+<body>
+
+    <!-- FIXED NAVIGATION -->
+    <nav class="top-nav">
+        <div class="container nav-content">
+            <div class="store-name">Al Shams</div>
+            <div class="nav-actions">
+                <button class="nav-btn btn-catalogue-nav" onclick="toggleCatalogue()">
+                    <i data-feather="book-open" style="width:14px;"></i> <span class="wish-text">Exclusive Catalogue</span>
+                </button>
+                <button class="nav-btn" onclick="toggleWishlist()">
+                    <i data-feather="heart" style="width:16px;"></i> <span class="wish-text">Selections</span> <span class="wish-count-badge" id="wishCountTop">(0)</span>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- 1. HERO -->
+    <header class="hero">
+        <img src="images/hero_bg.png" alt="Premium Tiles Architecture" class="hero-bg" loading="eager">
+        <div class="hero-content">
+            <h1 class="reveal" style="transition-delay: 0.1s;">Design Spaces<br>That Speak <span class="gold-italic">Luxury</span></h1>
+            <p class="reveal" style="transition-delay: 0.2s;">Exclusive tiles & marble curated for visionary projects.</p>
+            <div class="hero-buttons reveal" style="transition-delay: 0.4s;">
+                <a href="#collections" class="btn btn-gold">Explore Portfolio</a>
+                <a href="#enquiry" class="btn btn-outline">Consult Designer</a>
+            </div>
+        </div>
+    </header>
+
+    <!-- 2. TRUST BAR -->
+    <section class="trust-bar">
+        <div class="container trust-grid">
+            <div class="trust-item reveal">
+                <i data-feather="star" style="color: var(--gold); margin-bottom: 0.8rem; width: 32px; height: 32px; stroke-width: 1;"></i>
+                <h3>4.8 Rating</h3>
+                <p>Google Reviews</p>
+            </div>
+            <div class="trust-item reveal" style="transition-delay: 0.1s;">
+                <i data-feather="grid" style="color: var(--gold); margin-bottom: 0.8rem; width: 32px; height: 32px; stroke-width: 1;"></i>
+                <h3>1000+</h3>
+                <p>Curated Designs</p>
+            </div>
+            <div class="trust-item reveal" style="transition-delay: 0.2s;">
+                <i data-feather="truck" style="color: var(--gold); margin-bottom: 0.8rem; width: 32px; height: 32px; stroke-width: 1;"></i>
+                <h3>Same-Day</h3>
+                <p>Fast Delivery</p>
+            </div>
+            <div class="trust-item reveal" style="transition-delay: 0.3s;">
+                <i data-feather="map-pin" style="color: var(--gold); margin-bottom: 0.8rem; width: 32px; height: 32px; stroke-width: 1;"></i>
+                <h3>Serving</h3>
+                <p>Cuddalore District</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- 3. DYNAMIC COLLECTION SHOWCASE W/ CATEGORY FILTERS -->
+    <section id="collections" class="collections">
+        <div class="container">
+            <div class="section-header reveal">
+                <h2>The Collections</h2>
+                <div class="gold-line"></div>
+                <!-- Fully updated consistency label -->
+                <p style="color: var(--text-muted); margin-top: 1.5rem; font-size: 0.75rem; letter-spacing: 0.2em; text-transform:uppercase;">Select designs to build your bespoke selection</p>
+            </div>
+            
+            <div class="category-filters reveal" id="categoryFilters">
+                <button class="filter-btn active" onclick="filterCatalog('All', this)">All Series</button>
+                <button class="filter-btn" onclick="filterCatalog('Floor', this)">Floor Tiles</button>
+                <button class="filter-btn" onclick="filterCatalog('Wall', this)">Wall Tiles</button>
+                <button class="filter-btn" onclick="filterCatalog('Designer', this)">Designer</button>
+                <button class="filter-btn" onclick="filterCatalog('Marble', this)">Marble</button>
+            </div>
+
+            <div class="collection-grid" id="catalogGrid"></div>
+        </div>
+    </section>
+
+    <!-- 4. CATALOGUE LEAD MAGNET -->
+    <section class="catalogue-magnet reveal">
+        <div class="container magnet-content">
+            <h2 class="serif">Looking for unparalleled variety?</h2>
+            <p>Our website only features our core portfolio. Gain exclusive access to our complete full E-Catalogue featuring over 1,000+ luxury tile and stone designs.</p>
+            <button class="btn btn-gold" onclick="toggleCatalogue()">Request Full Catalogue via WhatsApp</button>
+        </div>
+    </section>
+
+    <!-- 5. BRAND STORY -->
+    <section class="story">
+        <div class="container story-content reveal">
+            <h2>"We don’t just sell tiles. We help build homes."</h2>
+            <p>At Al Shams Traders, we believe your personal space deeply influences your state of mind. Each piece in our collection is handpicked from elite quarries and artisans to ensure it meets an uncompromising standard of elegance, durability, and artistry.</p>
+        </div>
+    </section>
+
+    <!-- 6. ENQUIRY SECTION -->
+    <section id="enquiry" class="enquiry-section">
+        <div class="container enquiry-wrapper reveal">
+            <div class="section-header" style="margin-bottom: 4rem;">
+                <h2>Request a Callback</h2>
+                <div class="gold-line"></div>
+                <p style="margin-top: 1.5rem; letter-spacing: 0.05em; font-size:0.9rem;">Leave your details below and our luxury design consultant will contact you privately.</p>
+            </div>
+            <form onsubmit="handleEnquirySubmit(event)">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Full Name</label>
+                        <input type="text" class="form-control" required placeholder="Ex. Aravind...">
+                    </div>
+                    <div class="form-group">
+                        <label>Phone Number</label>
+                        <input type="tel" class="form-control" required placeholder="+91...">
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group" style="width: 100%;">
+                        <label>Email Address</label>
+                        <input type="email" class="form-control" required placeholder="you@example.com">
+                    </div>
+                </div>
+                <div style="margin-top: 3rem;">
+                    <button type="submit" class="btn btn-gold" style="padding: 1.2rem 4rem;">Submit Private Enquiry</button>
+                </div>
+            </form>
+        </div>
+    </section>
+
+    <!-- 7. SHOWROOM EXPERIENCE -->
+    <section class="showroom">
+        <div class="container" style="margin-bottom: 5rem;">
+            <div class="section-header reveal">
+                <h2>Showroom Experience</h2>
+                <div class="gold-line"></div>
+            </div>
+        </div>
+        <div class="horizontal-scroll reveal">
+            <div class="showroom-item"><img src="images/gallery_1.png" alt="Showroom View 1" loading="lazy"></div>
+            <div class="showroom-item"><img src="images/gallery_2.png" alt="Showroom View 2" loading="lazy"></div>
+            <div class="showroom-item"><img src="images/gallery_3.png" alt="Showroom View 3" loading="lazy"></div>
+            <div class="showroom-item"><img src="images/hero_bg.png" alt="Showroom View 4" loading="lazy"></div>
+        </div>
+    </section>
+
+    <!-- 8. REVIEWS CAROUSEL -->
+    <section class="reviews">
+        <div class="container">
+            <div class="section-header reveal">
+                <h2>Client Words</h2>
+                <div class="gold-line"></div>
+            </div>
+            <div class="reviews-wrapper reveal">
+                <!-- 5 Reviews generating a perfect horizontal overflow flow -->
+                <div class="review-card">
+                    <div class="stars"><i data-feather="star" fill="currentColor" style="color:var(--gold);width:16px;"></i><i data-feather="star" fill="currentColor" style="color:var(--gold);width:16px;"></i><i data-feather="star" fill="currentColor" style="color:var(--gold);width:16px;"></i><i data-feather="star" fill="currentColor" style="color:var(--gold);width:16px;"></i><i data-feather="star" fill="currentColor" style="color:var(--gold);width:16px;"></i></div>
+                    <p class="review-text">"All of your tiles are unique and very affordable. Very good quality and extremely nice staff."</p>
+                    <div class="review-author">— Stalin</div>
+                </div>
+                <!-- ... truncated for brevity ... -->
+                <div class="review-card"><div class="stars"><i data-feather="star" fill="currentColor" style="color:var(--gold);width:16px;"></i><i data-feather="star" fill="currentColor" style="color:var(--gold);width:16px;"></i><i data-feather="star" fill="currentColor" style="color:var(--gold);width:16px;"></i><i data-feather="star" fill="currentColor" style="color:var(--gold);width:16px;"></i><i data-feather="star" fill="currentColor" style="color:var(--gold);width:16px;"></i></div><p class="review-text">"Best deals with best price. Super display, quality, and service. Highly recommended."</p><div class="review-author">— Dharun Kumar</div></div>
+                <div class="review-card"><div class="stars"><i data-feather="star" fill="currentColor" style="color:var(--gold);width:16px;"></i><i data-feather="star" fill="currentColor" style="color:var(--gold);width:16px;"></i><i data-feather="star" fill="currentColor" style="color:var(--gold);width:16px;"></i><i data-feather="star" fill="currentColor" style="color:var(--gold);width:16px;"></i><i data-feather="star" fill="currentColor" style="color:var(--gold);width:16px;"></i></div><p class="review-text">"Good customer service and a peaceful environment to select our products."</p><div class="review-author">— Mohamed Salih</div></div>
+                <div class="review-card"><div class="stars"><i data-feather="star" fill="currentColor" style="color:var(--gold);width:16px;"></i><i data-feather="star" fill="currentColor" style="color:var(--gold);width:16px;"></i><i data-feather="star" fill="currentColor" style="color:var(--gold);width:16px;"></i><i data-feather="star" fill="currentColor" style="color:var(--gold);width:16px;"></i><i data-feather="star" fill="currentColor" style="color:var(--gold);width:16px;"></i></div><p class="review-text">"Variety choices, amazing customer services. Very lovely experience overall."</p><div class="review-author">— Herbert Jenkins</div></div>
+                <div class="review-card"><div class="stars"><i data-feather="star" fill="currentColor" style="color:var(--gold);width:16px;"></i><i data-feather="star" fill="currentColor" style="color:var(--gold);width:16px;"></i><i data-feather="star" fill="currentColor" style="color:var(--gold);width:16px;"></i><i data-feather="star" fill="currentColor" style="color:var(--gold);width:16px;"></i><i data-feather="star" fill="currentColor" style="color:var(--gold);width:16px;"></i></div><p class="review-text">"The most premium collection I have seen in Virudhachalam. Immediate delivery as promised."</p><div class="review-author">— Karthick R.</div></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 9. LOCATION & FOOTER -->
+    <footer>
+        <div class="container footer-grid">
+            <div class="footer-col reveal">
+                <h3 class="serif">Al Shams Traders</h3>
+                <p><i data-feather="map-pin" style="color: var(--gold); min-width: 24px;"></i> No: 7/3-A, Ponneri Bypass Rd<br>Near Rani Mahal, Virudhachalam<br>Tamil Nadu 606001</p>
+                <p><i data-feather="phone" style="color: var(--gold); min-width: 24px;"></i> +91 95002 08677</p>
+                <p><i data-feather="clock" style="color: var(--gold); min-width: 24px;"></i> Open Daily: 9:00 AM - 8:00 PM</p>
+            </div>
+            <div class="footer-col reveal" style="transition-delay: 0.2s;">
+                <div class="map-container">
+                    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3923.633881477755!2d79.3196!3d11.5173!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2sVirudhachalam!5e0!3m2!1sen!2sin!4v1620000000000!5m2!1sen!2sin" width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2026 Al Shams Traders. The Art of Premium Surfaces.</p>
+        </div>
+    </footer>
+
+    <!-- STICKY WHATSAPP & TOAST NOTIFICATION -->
+    <a href="https://wa.me/919500208677" target="_blank" class="sticky-wa" aria-label="Chat on WhatsApp">
+        <i data-feather="message-circle" style="width: 28px; height: 28px;"></i>
+    </a>
+
+    <div class="toast" id="wishlistToast">
+        <i data-feather="check-circle" style="width:16px;"></i> Added! Open Selections to send to Owner.
+    </div>
+
+    <!-- GLOBAL OVERLAY -->
+    <div class="overlay" id="appOverlay" onclick="closeAllModals()"></div>
+
+    <!-- WISHLIST SIDEBAR MODAL -->
+    <div class="sidebar-modal" id="wishlistSidebar">
+        <div class="modal-header">
+            <h2 class="serif">Your Selections</h2>
+            <button class="close-modal" onclick="toggleWishlist()"><i data-feather="x" style="width: 28px;"></i></button>
+        </div>
+        <div class="wishlist-items" id="wishlistContainer">
+            <!-- Items injected by JS -->
+        </div>
+        <div class="checkout-box">
+            <p class="title">Send Selections to Owner</p>
+            <p class="subtitle">Enter your details below to share your selections with Al Shams for pricing and availability over WhatsApp.</p>
+            <form onsubmit="checkoutWishlist(event)">
+                <div class="form-control" style="margin-bottom: 1rem;"><input type="text" id="wlName" required placeholder="Full Name" style="width:100%; background:transparent; border:none; color:white; outline:none;"></div>
+                <div class="form-control" style="margin-bottom: 1.5rem;"><input type="tel" id="wlPhone" required placeholder="Phone Number" style="width:100%; background:transparent; border:none; color:white; outline:none;"></div>
+                <button type="submit" class="btn btn-gold" style="width: 100%;">Share via WhatsApp <i data-feather="send" style="width:16px; margin-left: 8px;"></i></button>
+            </form>
+        </div>
+    </div>
+
+    <!-- CATALOGUE LEAD MAGNET MODAL -->
+    <div class="sidebar-modal" id="catalogueSidebar">
+        <div class="modal-header">
+            <h2 class="serif">Unlock Catalogue</h2>
+            <button class="close-modal" onclick="toggleCatalogue()"><i data-feather="x" style="width: 28px;"></i></button>
+        </div>
+        <div style="padding: 2rem;">
+            <p style="color:var(--text-muted); margin-bottom: 2rem; font-size: 0.9rem;">Fill in your details to instantly receive the premium PDF catalogue directly on WhatsApp.</p>
+            <form onsubmit="requestCatalogue(event)">
+                <div class="form-control" style="margin-bottom: 1.5rem;"><input type="text" id="catName" required placeholder="Your Full Name" style="width:100%; background:transparent; border:none; color:white; outline:none;"></div>
+                <div class="form-control" style="margin-bottom: 2.5rem;"><input type="tel" id="catPhone" required placeholder="WhatsApp Number" style="width:100%; background:transparent; border:none; color:white; outline:none;"></div>
+                <button type="submit" class="btn btn-gold" style="width: 100%;">Receive on WhatsApp <i data-feather="download" style="width:16px; margin-left: 8px;"></i></button>
+            </form>
+        </div>
+    </div>
+
+    <!-- MAIN SCRIPT -->
+    <script>
+        feather.replace();
+
+        // 1. DATA
+        const catalogData = [
+            { id: "c1", title: "Milano Floor", category: "Premium Floor", type: "Floor", image: "images/floor_tiles.png", delay: "0s" },
+            { id: "c2", title: "Verona Wall", category: "Elegant Wall", type: "Wall", image: "images/wall_tiles.png", delay: "0.1s" },
+            { id: "c3", title: "Onyx Designer", category: "Designer & Accent", type: "Designer", image: "images/designer_tiles.png", delay: "0s" },
+            { id: "c4", title: "Statuario Marble", category: "Natural Stone", type: "Marble", image: "images/gallery_3.png", delay: "0.1s" },
+            { id: "c5", title: "Golden Grid", category: "Designer Series", type: "Designer", image: "images/gallery_2.png", delay: "0s" },
+            { id: "c6", title: "Charcoal Slate", category: "Wall Series", type: "Wall", image: "images/gallery_1.png", delay: "0.1s" },
+            { id: "c7", title: "Imperial Cream", category: "Polished Floor", type: "Floor", image: "images/floor_tiles.png", delay: "0s" },
+            { id: "c8", title: "Noir Marble", category: "Natural Stone", type: "Marble", image: "images/hero_bg.png", delay: "0.1s" }
+        ];
+
+        // 2. STATE
+        let wishlist = JSON.parse(localStorage.getItem('al_shams_wishlist')) || [];
+        let currentFilter = 'All';
+        const overlay = document.getElementById('appOverlay');
+        const wishSidebar = document.getElementById('wishlistSidebar');
+        const catSidebar = document.getElementById('catalogueSidebar');
+
+        function saveWishlist() { localStorage.setItem('al_shams_wishlist', JSON.stringify(wishlist)); updateWishlistUI(); }
+        
+        function showToast() {
+            const toast = document.getElementById('wishlistToast');
+            toast.classList.add('show');
+            setTimeout(() => { toast.classList.remove('show'); }, 3000);
+        }
+
+        function toggleWishlistItem(itemId) {
+            const index = wishlist.indexOf(itemId);
+            if (index > -1) {
+                wishlist.splice(index, 1);
+            } else {
+                wishlist.push(itemId); 
+                showToast();
+            }
+            saveWishlist(); renderCatalog(currentFilter); 
+        }
+
+        function removeFromWishlist(itemId) {
+            wishlist = wishlist.filter(id => id !== itemId);
+            saveWishlist(); renderCatalog(currentFilter);
+        }
+
+        function filterCatalog(category, btnElement) {
+            currentFilter = category;
+            const buttons = document.querySelectorAll('.filter-btn');
+            buttons.forEach(btn => btn.classList.remove('active'));
+            if(btnElement) btnElement.classList.add('active');
+            renderCatalog(category);
+        }
+
+        // 3. RENDER CATALOG WITH FILTER
+        function renderCatalog(filter = 'All') {
+            const grid = document.getElementById('catalogGrid');
+            grid.innerHTML = '';
+            
+            const filteredData = filter === 'All' ? catalogData : catalogData.filter(item => item.type === filter);
+            
+            if(filteredData.length === 0) {
+                grid.innerHTML = '<p style="color:var(--text-muted); padding:2rem 0;">No collections found for this category.</p>';
+                return;
+            }
+
+            filteredData.forEach(item => {
+                const isLiked = wishlist.includes(item.id);
+                const heartHTML = `<button class="wishlist-heart-btn ${isLiked ? 'liked' : ''}" onclick="event.stopPropagation(); toggleWishlistItem('${item.id}')"><i data-feather="heart"></i></button>`;
+
+                const cardHTML = `
+                    <div class="collection-card reveal active" style="transition-delay: ${item.delay}">
+                        ${heartHTML}
+                        <img src="${item.image}" alt="${item.title}" loading="lazy">
+                        <div class="collection-info">
+                            <h3>${item.title}</h3>
+                            <p>${item.category}</p>
+                        </div>
+                    </div>
+                `;
+                grid.innerHTML += cardHTML;
+            });
+            feather.replace(); 
+        }
+
+        function updateWishlistUI() {
+            document.getElementById('wishCountTop').innerText = `(${wishlist.length})`;
+            const container = document.getElementById('wishlistContainer');
+            container.innerHTML = '';
+
+            if(wishlist.length === 0) {
+                container.innerHTML = '<p style="color:var(--text-muted); text-align:center; padding-top:2rem; font-family: var(--font-serif); font-size: 1.2rem; font-style: italic;">Your selection is empty.</p>';
+                return;
+            }
+
+            wishlist.forEach(id => {
+                const p = catalogData.find(c => c.id === id);
+                if(!p) return;
+                container.innerHTML += `
+                    <div class="wish-item">
+                        <img src="${p.image}" alt="">
+                        <div class="wish-item-info"><h4>${p.title}</h4><p>${p.category}</p></div>
+                        <button class="remove-btn" onclick="removeFromWishlist('${p.id}')"><i data-feather="trash-2" style="width:18px;"></i></button>
+                    </div>
+                `;
+            });
+            feather.replace();
+        }
+
+        // 4. CHECKOUTS & LEAD FORMS
+        function checkoutWishlist(e) {
+            e.preventDefault();
+            if(wishlist.length === 0) { alert("Your selection is empty!"); return; }
+            const name = document.getElementById('wlName').value;
+            const phone = document.getElementById('wlPhone').value;
+            let itemListText = "";
+            wishlist.forEach((id, i) => { const p = catalogData.find(c => c.id === id); if(p) itemListText += `${i+1}. ${p.title} (${p.category})\n`; });
+            // Fully updated to 'Selection Enquiry' logic
+            let msg = `*New Selection Enquiry*\n\n*Name:* ${name}\n*Phone:* ${phone}\n\n*Selected Collections:*\n${itemListText}\n`;
+            window.open(`https://wa.me/919500208677?text=${encodeURIComponent(msg)}`, '_blank');
+        }
+
+        function requestCatalogue(e) {
+            e.preventDefault();
+            const name = document.getElementById('catName').value;
+            const phone = document.getElementById('catPhone').value;
+            let msg = `*Catalogue Request*\n\nHello Al Shams, I would like to receive the Full E-Catalogue.\n*Name:* ${name}\n*Phone:* ${phone}`;
+            window.open(`https://wa.me/919500208677?text=${encodeURIComponent(msg)}`, '_blank');
+        }
+
+        function handleEnquirySubmit(e) {
+            e.preventDefault();
+            alert("Demo: Secure Enquiry submitted! In production, this directly emails the owner."); e.target.reset(); 
+        }
+
+        // 5. MODAL LOGIC
+        function toggleWishlist() {
+            catSidebar.classList.remove('open');
+            wishSidebar.classList.toggle('open');
+            updateOverlay(wishSidebar.classList.contains('open'));
+        }
+
+        function toggleCatalogue() {
+            wishSidebar.classList.remove('open');
+            catSidebar.classList.toggle('open');
+            updateOverlay(catSidebar.classList.contains('open'));
+        }
+
+        function closeAllModals() {
+            wishSidebar.classList.remove('open');
+            catSidebar.classList.remove('open');
+            updateOverlay(false);
+        }
+
+        function updateOverlay(isOpen) {
+            if(isOpen) {
+                overlay.classList.add('open');
+                document.body.style.overflow = 'hidden';
+            } else {
+                overlay.classList.remove('open');
+                document.body.style.overflow = 'auto';
+            }
+        }
+
+        // 6. SCROLL ANIMATIONS
+        function revealOnScroll() {
+            document.querySelectorAll('.reveal').forEach(reveal => {
+                if (reveal.getBoundingClientRect().top < window.innerHeight - 100) reveal.classList.add('active');
+            });
+        }
+        window.addEventListener('scroll', revealOnScroll);
+
+        document.addEventListener('DOMContentLoaded', () => { renderCatalog(); updateWishlistUI(); setTimeout(revealOnScroll, 100); });
+    </script>
+</body>
+</html>
