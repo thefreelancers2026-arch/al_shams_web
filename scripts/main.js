@@ -181,33 +181,53 @@ function checkoutWishlist(e) {
     window.open(`https://wa.me/919500208677?text=${encodeURIComponent(msg)}`, '_blank');
 }
 
+// Double-submission guard
+let _catalogueSubmitting = false;
+
 function requestCatalogue(e) {
     e.preventDefault();
+
+    // 1. Prevent double submission
+    if (_catalogueSubmitting) return;
+    _catalogueSubmitting = true;
+    setTimeout(() => { _catalogueSubmitting = false; }, 3000);
+
     const form = e.target;
-    const name = document.getElementById('catName').value.trim();
-    const phone = document.getElementById('catPhone').value.trim();
+    const rawName  = document.getElementById('catName').value.trim();
+    const rawPhone = document.getElementById('catPhone').value.trim();
 
-    // Validation
+    // 2. Sanitize name — allow only letters and spaces
+    const name = rawName.replace(/[^a-zA-Z\s]/g, '').trim();
     if (!name) {
-        showToast("Please enter your full name.");
-        return;
-    }
-    const phoneDigits = phone.replace(/\D/g, '');
-    if (!phone || phoneDigits.length < 10) {
-        showToast("Please enter a valid 10-digit phone number.");
+        showToast("Please enter a valid name (letters only).");
+        _catalogueSubmitting = false;
         return;
     }
 
-    // Build professional WhatsApp message
-    const msg = `*Catalogue Request*\n\nHi, I'm *${name}*.\nI would like to receive your full catalogue.\n\nMy number: ${phone}`;
+    // 3. Normalize phone — strip non-digits, keep last 10
+    const phoneDigits = rawPhone.replace(/\D/g, '');
+    const phone = phoneDigits.slice(-10);
+    if (phone.length < 10) {
+        showToast("Please enter a valid 10-digit phone number.");
+        _catalogueSubmitting = false;
+        return;
+    }
+
+    // Build message
+    const msg = `*Catalogue Request*\n\nHi, I'm *${name}*.\nI would like to receive your full catalogue.\n\nMy number: +91${phone}`;
 
     // Analytics
     trackEvent('request_catalogue', 'lead', 'whatsapp_catalog');
 
-    // Open WhatsApp
-    window.open(`https://wa.me/919500208677?text=${encodeURIComponent(msg)}`, '_blank');
+    // 4. Open WhatsApp with popup-blocked detection
+    const waWindow = window.open(`https://wa.me/919500208677?text=${encodeURIComponent(msg)}`, '_blank');
+    if (!waWindow || waWindow.closed || typeof waWindow.closed === 'undefined') {
+        showToast("Please allow popups to continue.");
+        _catalogueSubmitting = false;
+        return;
+    }
 
-    // Reset form and confirm
+    // Success
     form.reset();
     showToast("Catalogue request sent via WhatsApp ✓");
 }
