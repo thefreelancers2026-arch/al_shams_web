@@ -28,6 +28,14 @@ async function fetchCatalogData() {
         const response = await fetch('data/catalog.json');
         if (!response.ok) throw new Error('Network response was not ok');
         catalogData = await response.json();
+
+        // Purge any stale wishlist IDs that no longer exist in current catalog
+        const validIds = catalogData.map(item => item.id);
+        const cleaned = wishlist.filter(id => validIds.includes(id));
+        if (cleaned.length !== wishlist.length) {
+            wishlist = cleaned;
+            localStorage.setItem('al_shams_wishlist', JSON.stringify(wishlist));
+        }
     } catch (error) {
         console.error("Failed to fetch catalog. Using default fallback.", error);
         // Fallback ensures no UI breaking if JSON cannot be loaded due to local file:/// viewing
