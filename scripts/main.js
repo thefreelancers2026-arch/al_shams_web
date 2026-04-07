@@ -165,7 +165,7 @@ function updateWishlistUI() {
 // 4. CHECKOUTS & LEAD FORMS
 function checkoutWishlist(e) {
     e.preventDefault();
-    if(wishlist.length === 0) { alert("Your selection is empty!"); return; }
+    if(wishlist.length === 0) { showToast("Please add at least one design to your selection."); return; }
     const name = document.getElementById('wlName').value.trim();
     const phone = document.getElementById('wlPhone').value.trim();
     
