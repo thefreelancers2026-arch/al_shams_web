@@ -183,12 +183,33 @@ function checkoutWishlist(e) {
 
 function requestCatalogue(e) {
     e.preventDefault();
+    const form = e.target;
     const name = document.getElementById('catName').value.trim();
     const phone = document.getElementById('catPhone').value.trim();
-    let msg = `*Catalogue Request*\n\nHello Al Shams, I am *${name}*.\nPlease share your exclusive PDF E-Catalogue.\nMy number: ${phone}`;
-    
+
+    // Validation
+    if (!name) {
+        showToast("Please enter your full name.");
+        return;
+    }
+    const phoneDigits = phone.replace(/\D/g, '');
+    if (!phone || phoneDigits.length < 10) {
+        showToast("Please enter a valid 10-digit phone number.");
+        return;
+    }
+
+    // Build professional WhatsApp message
+    const msg = `*Catalogue Request*\n\nHi, I'm *${name}*.\nI would like to receive your full catalogue.\n\nMy number: ${phone}`;
+
+    // Analytics
     trackEvent('request_catalogue', 'lead', 'whatsapp_catalog');
+
+    // Open WhatsApp
     window.open(`https://wa.me/919500208677?text=${encodeURIComponent(msg)}`, '_blank');
+
+    // Reset form and confirm
+    form.reset();
+    showToast("Catalogue request sent via WhatsApp ✓");
 }
 
 async function handleEnquirySubmit(e) {
