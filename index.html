@@ -6,9 +6,53 @@
     <title>Al Shams Traders | Pure Classic Elegance</title>
     <meta name="description" content="Premium tiles, best price, huge collection, same-day delivery.">
     
+    <!-- Open Graph Tags -->
+    <meta property="og:title" content="Al Shams Traders | Premium Architecture & Tiles">
+    <meta property="og:description" content="Exclusive tiles & marble curated for visionary projects in Cuddalore district.">
+    <meta property="og:image" content="images/hero_bg.webp">
+    <meta property="og:type" content="website">
+    <link rel="icon" href="images/favicon.ico" type="image/x-icon">
+    
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Montserrat:wght@300;400;500;600&display=swap">
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
+    
+    <!-- Google Analytics (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-XXXXXXXXXX');
+    </script>
+    
+    <!-- JSON-LD Local Business Schema -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "HomeGoodsStore",
+      "name": "Al Shams Traders",
+      "image": "images/hero_bg.webp",
+      "address": {
+        "@type": "PostalAddress",
+        "streetAddress": "No: 7/3-A, Ponneri Bypass Rd",
+        "addressLocality": "Virudhachalam",
+        "addressRegion": "Tamil Nadu",
+        "postalCode": "606001",
+        "addressCountry": "IN"
+      },
+      "telephone": "+919500208677",
+      "openingHoursSpecification": [
+        {
+          "@type": "OpeningHoursSpecification",
+          "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"],
+          "opens": "09:00",
+          "closes": "20:00"
+        }
+      ]
+    }
+    </script>
     <script src="https://unpkg.com/feather-icons"></script>
 
     <style>
@@ -159,7 +203,7 @@
             background-color: var(--bg-card); text-align: center; border-top: 1px solid var(--border);
             border-bottom: 1px solid var(--border); padding: 8rem 0; position: relative;
         }
-        .catalogue-magnet::before { content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: url('images/hero_bg.png') center/cover; opacity: 0.05; z-index: 0; }
+        .catalogue-magnet::before { content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: url('images/hero_bg.webp') center/cover; opacity: 0.05; z-index: 0; }
         .magnet-content { position: relative; z-index: 1; max-width: 800px; margin: 0 auto; }
         .magnet-content h2 { font-size: clamp(2rem, 5vw, 3.5rem); margin-bottom: 1.5rem; color: var(--gold); }
         .magnet-content p { font-size: 1.1rem; color: var(--text-muted); margin-bottom: 3rem; font-weight: 300; }
@@ -217,12 +261,17 @@
         /* --------------------------
            Floating UI Elements
         -------------------------- */
-        .sticky-wa {
-            position: fixed; bottom: 30px; left: 30px; 
-            width: 60px; height: 60px; border-radius: 50%; display: flex; align-items: center; justify-content: center;
-            z-index: 1000; transition: var(--transition); background: rgba(255, 255, 255, 0.03); backdrop-filter: blur(12px); border: 1px solid var(--gold); color: var(--gold);
+        .sticky-wrapper {
+            position: fixed; bottom: 30px; left: 30px; z-index: 1000;
+            display: flex; flex-direction: column; gap: 6px;
+            background: rgba(16, 12, 10, 0.7); backdrop-filter: blur(12px); border: 1px solid rgba(197, 160, 89, 0.2);
+            padding: 8px; border-radius: 40px; box-shadow: 0 10px 30px rgba(0,0,0,0.5);
         }
-        .sticky-wa:hover { transform: scale(1.1); background: var(--gold); color: var(--bg-dark); }
+        .sticky-btn {
+            width: 45px; height: 45px; border-radius: 50%; display: flex; align-items: center; justify-content: center;
+            transition: var(--transition); background: rgba(197, 160, 89, 0.05); color: var(--gold); border: 1px solid transparent;
+        }
+        .sticky-btn:hover { transform: translateY(-3px); background: var(--gold); color: var(--bg-dark); box-shadow: 0 5px 15px rgba(197, 160, 89, 0.3); }
 
         .toast {
             position: fixed; bottom: -100px; left: 50%; transform: translateX(-50%);
@@ -288,7 +337,8 @@
             .hero-content h1 { font-size: 3rem; }
             
             /* Adjust floating UI for mobile */
-            .sticky-wa { bottom: 20px; left: 20px; width: 50px; height: 50px; }
+            .sticky-wrapper { bottom: 20px; left: 20px; padding: 6px; gap: 6px; }
+            .sticky-btn { width: 45px; height: 45px; }
             .toast { width: 90%; text-align: center; padding: 1rem; }
             
             /* Make category filters perfectly fit without stretching */
@@ -319,7 +369,7 @@
 
     <!-- 1. HERO -->
     <header class="hero">
-        <img src="images/hero_bg.png" alt="Premium Tiles Architecture" class="hero-bg" loading="eager">
+        <img src="images/hero_bg.webp" alt="Premium Tiles Architecture" class="hero-bg" loading="eager" fetchpriority="high">
         <div class="hero-content">
             <h1 class="reveal" style="transition-delay: 0.1s;">Design Spaces<br>That Speak <span class="gold-italic">Luxury</span></h1>
             <p class="reveal" style="transition-delay: 0.2s;">Exclusive tiles & marble curated for visionary projects.</p>
@@ -327,6 +377,7 @@
                 <a href="#collections" class="btn btn-gold">Explore Portfolio</a>
                 <a href="#enquiry" class="btn btn-outline">Consult Designer</a>
             </div>
+            <p class="reveal" style="position: relative; margin-top: 3rem; margin-bottom: 0; font-size: 0.65rem; color: rgba(140, 132, 122, 0.6); letter-spacing: 0.2em; transition-delay: 0.6s;">&bull; TRUSTED BY 500+ REGIONAL ARCHITECTS & DESIGNERS &bull;</p>
         </div>
     </header>
 
@@ -367,7 +418,7 @@
             </div>
             
             <div class="category-filters reveal" id="categoryFilters">
-                <button class="filter-btn active" onclick="filterCatalog('All', this)">All Series</button>
+                <button class="filter-btn active" onclick="filterCatalog('All', this)">All Designs</button>
                 <button class="filter-btn" onclick="filterCatalog('Floor', this)">Floor Tiles</button>
                 <button class="filter-btn" onclick="filterCatalog('Wall', this)">Wall Tiles</button>
                 <button class="filter-btn" onclick="filterCatalog('Designer', this)">Designer</button>
@@ -436,10 +487,10 @@
             </div>
         </div>
         <div class="horizontal-scroll reveal">
-            <div class="showroom-item"><img src="images/gallery_1.png" alt="Showroom View 1" loading="lazy"></div>
-            <div class="showroom-item"><img src="images/gallery_2.png" alt="Showroom View 2" loading="lazy"></div>
-            <div class="showroom-item"><img src="images/gallery_3.png" alt="Showroom View 3" loading="lazy"></div>
-            <div class="showroom-item"><img src="images/hero_bg.png" alt="Showroom View 4" loading="lazy"></div>
+            <div class="showroom-item"><img src="images/gallery_1.webp" alt="Showroom View 1" loading="lazy"></div>
+            <div class="showroom-item"><img src="images/gallery_2.webp" alt="Showroom View 2" loading="lazy"></div>
+            <div class="showroom-item"><img src="images/gallery_3.webp" alt="Showroom View 3" loading="lazy"></div>
+            <div class="showroom-item"><img src="images/hero_bg.webp" alt="Showroom View 4" loading="lazy"></div>
         </div>
     </section>
 
@@ -487,9 +538,14 @@
     </footer>
 
     <!-- STICKY WHATSAPP & TOAST NOTIFICATION -->
-    <a href="https://wa.me/919500208677" target="_blank" class="sticky-wa" aria-label="Chat on WhatsApp">
-        <i data-feather="message-circle" style="width: 28px; height: 28px;"></i>
-    </a>
+    <div class="sticky-wrapper">
+        <a href="tel:+919500208677" class="sticky-btn" aria-label="Call Now">
+            <i data-feather="phone" style="width: 20px; height: 20px;"></i>
+        </a>
+        <a href="https://wa.me/919500208677?text=Hello%20Al%20Shams,%20I%20am%20interested%20in%20your%20premium%20tiles." target="_blank" class="sticky-btn" aria-label="Chat on WhatsApp">
+            <i data-feather="message-circle" style="width: 20px; height: 20px;"></i>
+        </a>
+    </div>
 
     <div class="toast" id="wishlistToast">
         <i data-feather="check-circle" style="width:16px;"></i> Added! Open Selections to send to Owner.
@@ -534,180 +590,7 @@
         </div>
     </div>
 
-    <!-- MAIN SCRIPT -->
-    <script>
-        feather.replace();
-
-        // 1. DATA
-        const catalogData = [
-            { id: "c1", title: "Milano Floor", category: "Premium Floor", type: "Floor", image: "images/floor_tiles.png", delay: "0s" },
-            { id: "c2", title: "Verona Wall", category: "Elegant Wall", type: "Wall", image: "images/wall_tiles.png", delay: "0.1s" },
-            { id: "c3", title: "Onyx Designer", category: "Designer & Accent", type: "Designer", image: "images/designer_tiles.png", delay: "0s" },
-            { id: "c4", title: "Statuario Marble", category: "Natural Stone", type: "Marble", image: "images/gallery_3.png", delay: "0.1s" },
-            { id: "c5", title: "Golden Grid", category: "Designer Series", type: "Designer", image: "images/gallery_2.png", delay: "0s" },
-            { id: "c6", title: "Charcoal Slate", category: "Wall Series", type: "Wall", image: "images/gallery_1.png", delay: "0.1s" },
-            { id: "c7", title: "Imperial Cream", category: "Polished Floor", type: "Floor", image: "images/floor_tiles.png", delay: "0s" },
-            { id: "c8", title: "Noir Marble", category: "Natural Stone", type: "Marble", image: "images/hero_bg.png", delay: "0.1s" }
-        ];
-
-        // 2. STATE
-        let wishlist = JSON.parse(localStorage.getItem('al_shams_wishlist')) || [];
-        let currentFilter = 'All';
-        const overlay = document.getElementById('appOverlay');
-        const wishSidebar = document.getElementById('wishlistSidebar');
-        const catSidebar = document.getElementById('catalogueSidebar');
-
-        function saveWishlist() { localStorage.setItem('al_shams_wishlist', JSON.stringify(wishlist)); updateWishlistUI(); }
-        
-        function showToast() {
-            const toast = document.getElementById('wishlistToast');
-            toast.classList.add('show');
-            setTimeout(() => { toast.classList.remove('show'); }, 3000);
-        }
-
-        function toggleWishlistItem(itemId) {
-            const index = wishlist.indexOf(itemId);
-            if (index > -1) {
-                wishlist.splice(index, 1);
-            } else {
-                wishlist.push(itemId); 
-                showToast();
-            }
-            saveWishlist(); renderCatalog(currentFilter); 
-        }
-
-        function removeFromWishlist(itemId) {
-            wishlist = wishlist.filter(id => id !== itemId);
-            saveWishlist(); renderCatalog(currentFilter);
-        }
-
-        function filterCatalog(category, btnElement) {
-            currentFilter = category;
-            const buttons = document.querySelectorAll('.filter-btn');
-            buttons.forEach(btn => btn.classList.remove('active'));
-            if(btnElement) btnElement.classList.add('active');
-            renderCatalog(category);
-        }
-
-        // 3. RENDER CATALOG WITH FILTER
-        function renderCatalog(filter = 'All') {
-            const grid = document.getElementById('catalogGrid');
-            grid.innerHTML = '';
-            
-            const filteredData = filter === 'All' ? catalogData : catalogData.filter(item => item.type === filter);
-            
-            if(filteredData.length === 0) {
-                grid.innerHTML = '<p style="color:var(--text-muted); padding:2rem 0;">No collections found for this category.</p>';
-                return;
-            }
-
-            filteredData.forEach(item => {
-                const isLiked = wishlist.includes(item.id);
-                const heartHTML = `<button class="wishlist-heart-btn ${isLiked ? 'liked' : ''}" onclick="event.stopPropagation(); toggleWishlistItem('${item.id}')"><i data-feather="heart"></i></button>`;
-
-                const cardHTML = `
-                    <div class="collection-card reveal active" style="transition-delay: ${item.delay}">
-                        ${heartHTML}
-                        <img src="${item.image}" alt="${item.title}" loading="lazy">
-                        <div class="collection-info">
-                            <h3>${item.title}</h3>
-                            <p>${item.category}</p>
-                        </div>
-                    </div>
-                `;
-                grid.innerHTML += cardHTML;
-            });
-            feather.replace(); 
-        }
-
-        function updateWishlistUI() {
-            document.getElementById('wishCountTop').innerText = `(${wishlist.length})`;
-            const container = document.getElementById('wishlistContainer');
-            container.innerHTML = '';
-
-            if(wishlist.length === 0) {
-                container.innerHTML = '<p style="color:var(--text-muted); text-align:center; padding-top:2rem; font-family: var(--font-serif); font-size: 1.2rem; font-style: italic;">Your selection is empty.</p>';
-                return;
-            }
-
-            wishlist.forEach(id => {
-                const p = catalogData.find(c => c.id === id);
-                if(!p) return;
-                container.innerHTML += `
-                    <div class="wish-item">
-                        <img src="${p.image}" alt="">
-                        <div class="wish-item-info"><h4>${p.title}</h4><p>${p.category}</p></div>
-                        <button class="remove-btn" onclick="removeFromWishlist('${p.id}')"><i data-feather="trash-2" style="width:18px;"></i></button>
-                    </div>
-                `;
-            });
-            feather.replace();
-        }
-
-        // 4. CHECKOUTS & LEAD FORMS
-        function checkoutWishlist(e) {
-            e.preventDefault();
-            if(wishlist.length === 0) { alert("Your selection is empty!"); return; }
-            const name = document.getElementById('wlName').value;
-            const phone = document.getElementById('wlPhone').value;
-            let itemListText = "";
-            wishlist.forEach((id, i) => { const p = catalogData.find(c => c.id === id); if(p) itemListText += `${i+1}. ${p.title} (${p.category})\n`; });
-            // Fully updated to 'Selection Enquiry' logic
-            let msg = `*New Selection Enquiry*\n\n*Name:* ${name}\n*Phone:* ${phone}\n\n*Selected Collections:*\n${itemListText}\n`;
-            window.open(`https://wa.me/919500208677?text=${encodeURIComponent(msg)}`, '_blank');
-        }
-
-        function requestCatalogue(e) {
-            e.preventDefault();
-            const name = document.getElementById('catName').value;
-            const phone = document.getElementById('catPhone').value;
-            let msg = `*Catalogue Request*\n\nHello Al Shams, I would like to receive the Full E-Catalogue.\n*Name:* ${name}\n*Phone:* ${phone}`;
-            window.open(`https://wa.me/919500208677?text=${encodeURIComponent(msg)}`, '_blank');
-        }
-
-        function handleEnquirySubmit(e) {
-            e.preventDefault();
-            alert("Demo: Secure Enquiry submitted! In production, this directly emails the owner."); e.target.reset(); 
-        }
-
-        // 5. MODAL LOGIC
-        function toggleWishlist() {
-            catSidebar.classList.remove('open');
-            wishSidebar.classList.toggle('open');
-            updateOverlay(wishSidebar.classList.contains('open'));
-        }
-
-        function toggleCatalogue() {
-            wishSidebar.classList.remove('open');
-            catSidebar.classList.toggle('open');
-            updateOverlay(catSidebar.classList.contains('open'));
-        }
-
-        function closeAllModals() {
-            wishSidebar.classList.remove('open');
-            catSidebar.classList.remove('open');
-            updateOverlay(false);
-        }
-
-        function updateOverlay(isOpen) {
-            if(isOpen) {
-                overlay.classList.add('open');
-                document.body.style.overflow = 'hidden';
-            } else {
-                overlay.classList.remove('open');
-                document.body.style.overflow = 'auto';
-            }
-        }
-
-        // 6. SCROLL ANIMATIONS
-        function revealOnScroll() {
-            document.querySelectorAll('.reveal').forEach(reveal => {
-                if (reveal.getBoundingClientRect().top < window.innerHeight - 100) reveal.classList.add('active');
-            });
-        }
-        window.addEventListener('scroll', revealOnScroll);
-
-        document.addEventListener('DOMContentLoaded', () => { renderCatalog(); updateWishlistUI(); setTimeout(revealOnScroll, 100); });
-    </script>
+    <!-- UI & BUSINESS LOGIC ENGINE -->
+    <script src="scripts/main.js"></script>
 </body>
 </html>
