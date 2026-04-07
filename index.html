@@ -157,44 +157,66 @@
         .trust-item p { font-family: var(--font-sans); font-size: 0.65rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.25em; font-weight: 500; }
 
         /* --------------------------
-           3. COLLECTION SHOWCASE
+           3. COLLECTION SHOWCASE — Horizontal Premium Strip
         -------------------------- */
         .section-header { text-align: center; margin-bottom: 4rem; }
         .section-header h2 { font-size: clamp(2.5rem, 5vw, 4rem); margin-bottom: 1rem; }
         .section-header .gold-line { width: 60px; height: 1px; background-color: var(--gold); margin: 0 auto; }
 
-        .category-filters { display: flex; justify-content: center; gap: 1.5rem; margin-bottom: 3rem; flex-wrap: wrap; }
-        .filter-btn {
-            background: transparent; border: 1px solid rgba(197, 160, 89, 0.2); color: var(--text-muted);
-            padding: 0.8rem 2rem; font-family: var(--font-sans); font-size: 0.75rem;
-            text-transform: uppercase; letter-spacing: 0.15em; cursor: pointer; transition: var(--transition); border-radius: 4px;
+        /* Scroll hint arrow */
+        .scroll-hint { display: flex; align-items: center; justify-content: center; gap: 0.8rem; margin-top: 1.5rem;
+            font-size: 0.65rem; color: var(--text-muted); letter-spacing: 0.25em; text-transform: uppercase; }
+        .scroll-hint svg { animation: nudge 2s ease-in-out infinite; }
+        @keyframes nudge { 0%, 100% { transform: translateX(0); } 50% { transform: translateX(6px); } }
+
+        /* The horizontal scrolling strip */
+        .catalogue-strip {
+            display: flex; gap: 1.5rem;
+            overflow-x: auto; padding: 0 4% 2rem;
+            scroll-snap-type: x mandatory;
+            scrollbar-width: none; cursor: grab;
+            -webkit-overflow-scrolling: touch;
         }
-        .filter-btn:hover, .filter-btn.active { border-color: var(--gold); color: var(--gold); }
+        .catalogue-strip::-webkit-scrollbar { display: none; }
+        .catalogue-strip.grabbing { cursor: grabbing; }
 
-        .collection-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 2rem; }
-        
-        .collection-card { position: relative; height: 450px; overflow: hidden; border: 1px solid var(--border); cursor: pointer; }
-        .collection-card img { width: 100%; height: 100%; object-fit: cover; transition: transform 1.5s cubic-bezier(0.25, 1, 0.5, 1); }
-        .collection-card::after { content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(to top, rgba(16,12,10,0.95) 0%, transparent 50%); pointer-events: none; }
-        .collection-card:hover img { transform: scale(1.05); }
+        /* Individual tile card */
+        .collection-card {
+            position: relative;
+            min-width: 280px; width: 280px; height: 400px;
+            overflow: hidden; border: 1px solid var(--border);
+            cursor: pointer; flex-shrink: 0;
+            scroll-snap-align: start;
+            transition: border-color 0.4s ease;
+        }
+        .collection-card:hover { border-color: rgba(197, 160, 89, 0.5); }
+        .collection-card img { width: 100%; height: 100%; object-fit: cover; transition: transform 1.2s cubic-bezier(0.25, 1, 0.5, 1); }
+        .collection-card::after { content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            background: linear-gradient(to top, rgba(16,12,10,0.9) 0%, transparent 55%); pointer-events: none; }
+        .collection-card:hover img { transform: scale(1.06); }
 
-        .collection-info { position: absolute; bottom: 2rem; left: 2rem; z-index: 2; pointer-events: none; }
-        .collection-info h3 { font-size: 1.8rem; margin-bottom: 0.3rem; transition: var(--transition); color: var(--text-main); }
-        .collection-info p { color: var(--gold); font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.2em; opacity: 0; transform: translateY(10px); transition: var(--transition); }
-        
-        .collection-card:hover .collection-info h3 { transform: translateY(-5px); color: var(--gold); }
+        .collection-info { position: absolute; bottom: 1.5rem; left: 1.5rem; z-index: 2; pointer-events: none; }
+        .collection-info h3 { font-size: 1.3rem; margin-bottom: 0.3rem; transition: var(--transition); color: var(--text-main); }
+        .collection-info p { color: var(--gold); font-size: 0.65rem; text-transform: uppercase; letter-spacing: 0.2em;
+            opacity: 0; transform: translateY(8px); transition: var(--transition); }
+        .collection-card:hover .collection-info h3 { transform: translateY(-4px); color: var(--gold); }
         .collection-card:hover .collection-info p { opacity: 1; transform: translateY(0); }
 
         .wishlist-heart-btn {
-            position: absolute; top: 20px; right: 20px; z-index: 10;
+            position: absolute; top: 14px; right: 14px; z-index: 10;
             background: rgba(16,12,10,0.5); backdrop-filter: blur(5px);
             border: 1px solid var(--border); border-radius: 50%;
-            width: 40px; height: 40px; display: flex; align-items: center; justify-content: center;
+            width: 36px; height: 36px; display: flex; align-items: center; justify-content: center;
             color: var(--text-main); cursor: pointer; transition: var(--transition);
         }
         .wishlist-heart-btn:hover { background: rgba(197, 160, 89, 0.2); border-color: var(--gold); color: var(--gold); }
         .wishlist-heart-btn.liked { color: var(--bg-dark); background: var(--gold); border-color: var(--gold); }
         .wishlist-heart-btn.liked svg { fill: var(--bg-dark); stroke: var(--bg-dark); }
+
+        /* Mobile touch sizing */
+        @media (max-width: 768px) {
+            .collection-card { min-width: 75vw; width: 75vw; height: 340px; }
+        }
 
         /* --------------------------
            4. CATALOGUE LEAD MAGNET
@@ -407,26 +429,21 @@
         </div>
     </section>
 
-    <!-- 3. DYNAMIC COLLECTION SHOWCASE W/ CATEGORY FILTERS -->
-    <section id="collections" class="collections">
+    <!-- 3. COLLECTION SHOWCASE — Horizontal Swipe Strip -->
+    <section id="collections" class="collections" style="padding-bottom: 0;">
         <div class="container">
             <div class="section-header reveal">
                 <h2>The Collections</h2>
                 <div class="gold-line"></div>
-                <!-- Fully updated consistency label -->
                 <p style="color: var(--text-muted); margin-top: 1.5rem; font-size: 0.75rem; letter-spacing: 0.2em; text-transform:uppercase;">Select designs to build your bespoke selection</p>
+                <div class="scroll-hint reveal" style="transition-delay: 0.2s;">
+                    <i data-feather="arrow-right" style="width:14px; color: var(--gold);"></i>
+                    <span>Swipe to explore all designs</span>
+                    <i data-feather="arrow-right" style="width:14px; color: var(--gold);"></i>
+                </div>
             </div>
-            
-            <div class="category-filters reveal" id="categoryFilters">
-                <button class="filter-btn active" onclick="filterCatalog('All', this)">All Designs</button>
-                <button class="filter-btn" onclick="filterCatalog('Floor', this)">Floor Tiles</button>
-                <button class="filter-btn" onclick="filterCatalog('Wall', this)">Wall Tiles</button>
-                <button class="filter-btn" onclick="filterCatalog('Designer', this)">Designer</button>
-                <button class="filter-btn" onclick="filterCatalog('Marble', this)">Marble</button>
-            </div>
-
-            <div class="collection-grid" id="catalogGrid"></div>
         </div>
+        <div class="catalogue-strip reveal" id="catalogGrid"></div>
     </section>
 
     <!-- 4. CATALOGUE LEAD MAGNET -->

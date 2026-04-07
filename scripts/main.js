@@ -86,25 +86,26 @@ function imageFallback(imgElement) {
     imgElement.src = 'images/hero_bg.webp'; // ultimate fallback image
 }
 
-// 3. RENDER CATALOG WITH FILTER
+// 3. RENDER CATALOG into horizontal strip
 function renderCatalog(filter = 'All') {
-    const grid = document.getElementById('catalogGrid');
-    grid.innerHTML = '';
-    
-    const filteredData = filter === 'All' ? catalogData : catalogData.filter(item => item.type === filter);
-    
-    if(filteredData.length === 0) {
-        grid.innerHTML = '<p style="color:var(--text-muted); padding:2rem 0;">No collections found for this category.</p>';
+    const strip = document.getElementById('catalogGrid');
+    strip.innerHTML = '';
+
+    // Filtering still works if types are set in catalog.json
+    const data = filter === 'All' ? catalogData : catalogData.filter(item => item.type === filter);
+
+    if (data.length === 0) {
+        strip.innerHTML = '<p style="color:var(--text-muted); padding: 2rem 4%;">No collections found.</p>';
         return;
     }
 
-    filteredData.forEach(item => {
+    data.forEach(item => {
         const isLiked = wishlist.includes(item.id);
-        const heartHTML = `<button class="wishlist-heart-btn ${isLiked ? 'liked' : ''}" onclick="event.stopPropagation(); toggleWishlistItem('${item.id}')" aria-label="Add to Selections"><i data-feather="heart"></i></button>`;
-
-        const cardHTML = `
-            <div class="collection-card reveal active" style="transition-delay: ${item.delay}">
-                ${heartHTML}
+        strip.innerHTML += `
+            <div class="collection-card">
+                <button class="wishlist-heart-btn ${isLiked ? 'liked' : ''}" onclick="event.stopPropagation(); toggleWishlistItem('${item.id}')" aria-label="Add to Selections">
+                    <i data-feather="heart"></i>
+                </button>
                 <img src="${item.image}" alt="${item.title}" loading="lazy" decoding="async" onerror="imageFallback(this)">
                 <div class="collection-info">
                     <h3>${item.title}</h3>
@@ -112,9 +113,29 @@ function renderCatalog(filter = 'All') {
                 </div>
             </div>
         `;
-        grid.innerHTML += cardHTML;
     });
-    feather.replace(); 
+
+    feather.replace();
+    addDragScroll(strip);
+}
+
+// Drag-to-scroll for desktop luxury feel
+function addDragScroll(el) {
+    let isDown = false, startX, scrollLeft;
+    el.addEventListener('mousedown', (e) => {
+        isDown = true; el.classList.add('grabbing');
+        startX = e.pageX - el.offsetLeft;
+        scrollLeft = el.scrollLeft;
+    });
+    el.addEventListener('mouseleave', () => { isDown = false; el.classList.remove('grabbing'); });
+    el.addEventListener('mouseup', () => { isDown = false; el.classList.remove('grabbing'); });
+    el.addEventListener('mousemove', (e) => {
+        if (!isDown) return;
+        e.preventDefault();
+        const x = e.pageX - el.offsetLeft;
+        const walk = (x - startX) * 1.5;
+        el.scrollLeft = scrollLeft - walk;
+    });
 }
 
 function updateWishlistUI() {
