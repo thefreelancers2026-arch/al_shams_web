@@ -1,6 +1,11 @@
 // main.js
 
-// 1. Analytics Wrapper
+// 1. Analytics Wrapper — gtag init moved here from index.html to eliminate unsafe-inline
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'G-FH75G2ZE9T');
+
 function trackEvent(eventName, eventCategory, eventLabel) {
     if (typeof gtag !== 'undefined') {
         gtag('event', eventName, {
@@ -380,4 +385,15 @@ document.addEventListener('DOMContentLoaded', () => {
     document.getElementById('wishCountTop').innerText = `(${wishlist.length})`;
     fetchCatalogData();
     setTimeout(revealOnScroll, 100);
+
+    // Wire all interactive elements via addEventListener (no onclick= in HTML)
+    // This is required to drop 'unsafe-inline' from script-src CSP.
+    document.getElementById('navCatalogueBtn').addEventListener('click', toggleCatalogue);
+    document.getElementById('navWishlistBtn').addEventListener('click', toggleWishlist);
+    document.getElementById('magnetCatalogueBtn').addEventListener('click', toggleCatalogue);
+    document.getElementById('closeWishlistBtn').addEventListener('click', toggleWishlist);
+    document.getElementById('closeCatalogueBtn').addEventListener('click', toggleCatalogue);
+    document.getElementById('checkoutForm').addEventListener('submit', checkoutWishlist);
+    document.getElementById('enquiryForm').addEventListener('submit', handleEnquirySubmit);
+    document.getElementById('catalogueForm').addEventListener('submit', requestCatalogue);
 });

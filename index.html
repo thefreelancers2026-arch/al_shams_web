@@ -40,14 +40,8 @@
     <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Montserrat:wght@300;400;500;600&display=swap">
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
     
-    <!-- Google Analytics (gtag.js) -->
+    <!-- Google Analytics (gtag.js) — init is in main.js to avoid unsafe-inline -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-FH75G2ZE9T"></script>
-    <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
-      gtag('config', 'G-FH75G2ZE9T');
-    </script>
     
     <!-- JSON-LD Local Business Schema -->
     <script type="application/ld+json">
@@ -401,10 +395,10 @@
         <div class="container nav-content">
             <div class="store-name">Al Shams</div>
             <div class="nav-actions">
-                <button class="nav-btn btn-catalogue-nav" onclick="toggleCatalogue()">
+                <button id="navCatalogueBtn" class="nav-btn btn-catalogue-nav">
                     <i data-feather="book-open" style="width:14px;"></i> <span class="wish-text">Exclusive Catalogue</span>
                 </button>
-                <button class="nav-btn" onclick="toggleWishlist()">
+                <button id="navWishlistBtn" class="nav-btn">
                     <i data-feather="heart" style="width:16px;"></i> <span class="wish-text">Selections</span> <span class="wish-count-badge" id="wishCountTop">(0)</span>
                 </button>
             </div>
@@ -476,7 +470,7 @@
         <div class="container magnet-content">
             <h2 class="serif">Looking for unparalleled variety?</h2>
             <p>Our website only features our core portfolio. Gain exclusive access to our complete full E-Catalogue featuring over 1,000+ luxury tile and stone designs.</p>
-            <button class="btn btn-gold" onclick="toggleCatalogue()">Request Full Catalogue via WhatsApp</button>
+            <button id="magnetCatalogueBtn" class="btn btn-gold">Request Full Catalogue via WhatsApp</button>
         </div>
     </section>
 
@@ -496,7 +490,7 @@
                 <div class="gold-line"></div>
                 <p style="margin-top: 1.5rem; letter-spacing: 0.05em; font-size:0.9rem;">Leave your details below and our luxury design consultant will contact you privately.</p>
             </div>
-            <form onsubmit="handleEnquirySubmit(event)">
+            <form id="enquiryForm">
                 <div class="form-row">
                     <div class="form-group">
                         <label>Full Name</label>
@@ -600,7 +594,7 @@
     <div class="sidebar-modal" id="wishlistSidebar">
         <div class="modal-header">
             <h2 class="serif">Your Selections</h2>
-            <button class="close-modal" onclick="toggleWishlist()"><i data-feather="x" style="width: 28px;"></i></button>
+            <button id="closeWishlistBtn" class="close-modal"><i data-feather="x" style="width: 28px;"></i></button>
         </div>
         <div class="wishlist-items" id="wishlistContainer">
             <!-- Items injected by JS -->
@@ -608,7 +602,7 @@
         <div class="checkout-box">
             <p class="title">Send Selections to Owner</p>
             <p class="subtitle">Enter your details below to share your selections with Al Shams for pricing and availability over WhatsApp.</p>
-            <form onsubmit="checkoutWishlist(event)">
+            <form id="checkoutForm">
                 <div class="form-control" style="margin-bottom: 1rem;"><input type="text" id="wlName" required placeholder="Full Name" style="width:100%; background:transparent; border:none; color:white; outline:none;"></div>
                 <div class="form-control" style="margin-bottom: 1.5rem;"><input type="tel" id="wlPhone" required placeholder="Phone Number" style="width:100%; background:transparent; border:none; color:white; outline:none;"></div>
                 <button type="submit" class="btn btn-gold" style="width: 100%;">Share via WhatsApp <i data-feather="send" style="width:16px; margin-left: 8px;"></i></button>
@@ -620,11 +614,11 @@
     <div class="sidebar-modal" id="catalogueSidebar">
         <div class="modal-header">
             <h2 class="serif">Unlock Catalogue</h2>
-            <button class="close-modal" onclick="toggleCatalogue()"><i data-feather="x" style="width: 28px;"></i></button>
+            <button id="closeCatalogueBtn" class="close-modal"><i data-feather="x" style="width: 28px;"></i></button>
         </div>
         <div style="padding: 2rem;">
             <p style="color:var(--text-muted); margin-bottom: 2rem; font-size: 0.9rem;">Fill in your details to instantly receive the premium PDF catalogue directly on WhatsApp.</p>
-            <form onsubmit="requestCatalogue(event)">
+            <form id="catalogueForm">
                 <div class="form-control" style="margin-bottom: 1.5rem;"><input type="text" id="catName" required placeholder="Your Full Name" style="width:100%; background:transparent; border:none; color:white; outline:none;"></div>
                 <div class="form-control" style="margin-bottom: 2.5rem;"><input type="tel" id="catPhone" required placeholder="WhatsApp Number" style="width:100%; background:transparent; border:none; color:white; outline:none;"></div>
                 <button type="submit" class="btn btn-gold" style="width: 100%;">Receive on WhatsApp <i data-feather="download" style="width:16px; margin-left: 8px;"></i></button>
