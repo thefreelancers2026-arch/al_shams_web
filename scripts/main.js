@@ -14,7 +14,10 @@ function trackEvent(eventName, eventCategory, eventLabel) {
 
 // 2. STATE & DATA
 let catalogData = [];
-let wishlist = JSON.parse(localStorage.getItem('al_shams_wishlist')) || [];
+// Parse wishlist from localStorage — validate it's always an Array to prevent corrupted/old
+// data from causing a wrong count (e.g. a saved string would have .length = 1)
+const _rawWishlist = JSON.parse(localStorage.getItem('al_shams_wishlist'));
+let wishlist = Array.isArray(_rawWishlist) ? _rawWishlist : [];
 let currentFilter = 'All';
 const overlay = document.getElementById('appOverlay');
 const wishSidebar = document.getElementById('wishlistSidebar');
@@ -28,6 +31,14 @@ async function fetchCatalogData() {
         const response = await fetch('data/catalog.json');
         if (!response.ok) throw new Error('Network response was not ok');
         catalogData = await response.json();
+
+        // Purge any stale wishlist IDs that no longer exist in current catalog
+        const validIds = catalogData.map(item => item.id);
+        const cleaned = wishlist.filter(id => validIds.includes(id));
+        if (cleaned.length !== wishlist.length) {
+            wishlist = cleaned;
+            localStorage.setItem('al_shams_wishlist', JSON.stringify(wishlist));
+        }
     } catch (error) {
         console.error("Failed to fetch catalog. Using default fallback.", error);
         // Fallback ensures no UI breaking if JSON cannot be loaded due to local file:/// viewing
@@ -320,7 +331,10 @@ document.addEventListener('click', (e) => {
 });
 
 // INITIALIZE
-document.addEventListener('DOMContentLoaded', () => { 
-    fetchCatalogData(); 
-    setTimeout(revealOnScroll, 100); 
+document.addEventListener('DOMContentLoaded', () => {
+    // Immediately sync the badge with the correct count BEFORE the async catalog fetch,
+    // so the nav never shows a stale or wrong number on first paint.
+    document.getElementById('wishCountTop').innerText = `(${wishlist.length})`;
+    fetchCatalogData();
+    setTimeout(revealOnScroll, 100);
 });
