@@ -14,7 +14,10 @@ function trackEvent(eventName, eventCategory, eventLabel) {
 
 // 2. STATE & DATA
 let catalogData = [];
-let wishlist = JSON.parse(localStorage.getItem('al_shams_wishlist')) || [];
+// Parse wishlist from localStorage — validate it's always an Array to prevent corrupted/old
+// data from causing a wrong count (e.g. a saved string would have .length = 1)
+const _rawWishlist = JSON.parse(localStorage.getItem('al_shams_wishlist'));
+let wishlist = Array.isArray(_rawWishlist) ? _rawWishlist : [];
 let currentFilter = 'All';
 const overlay = document.getElementById('appOverlay');
 const wishSidebar = document.getElementById('wishlistSidebar');
@@ -328,7 +331,10 @@ document.addEventListener('click', (e) => {
 });
 
 // INITIALIZE
-document.addEventListener('DOMContentLoaded', () => { 
-    fetchCatalogData(); 
-    setTimeout(revealOnScroll, 100); 
+document.addEventListener('DOMContentLoaded', () => {
+    // Immediately sync the badge with the correct count BEFORE the async catalog fetch,
+    // so the nav never shows a stale or wrong number on first paint.
+    document.getElementById('wishCountTop').innerText = `(${wishlist.length})`;
+    fetchCatalogData();
+    setTimeout(revealOnScroll, 100);
 });
