@@ -266,33 +266,12 @@ async function requestCatalogue(e) {
 
     trackEvent('request_catalogue', 'lead', 'whatsapp_catalog_auto');
 
-    try {
-        const response = await fetch('/api/send-catalogue', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ name, phone }),
-        });
-        const data = await response.json();
-
-        if (response.ok && data.success) {
-            localStorage.setItem('cat_last_sent', String(Date.now()));
-            form.reset();
-            showToast("Catalogue sent to your WhatsApp ✓");
-            trackEvent('catalogue_sent', 'lead', 'auto_whatsapp_success');
-        } else {
-            console.warn('[catalogue] API error, using fallback:', data.error);
-        alert('DEBUG API ERROR: ' + data.error);
-            _fallbackCatalogueWa(name, phone);
-        }
-    } catch (err) {
-        console.warn('[catalogue] Network error, using fallback:', err);
-        alert('DEBUG ERROR: ' + err.message);
-        _fallbackCatalogueWa(name, phone);
-    } finally {
-        btn.innerHTML = originalText;
-        btn.disabled = false;
-        setTimeout(() => { _catalogueSubmitting = false; }, 3000);
-    }
+    // TEMPORARY DEMO MODE: Bypassing Meta Sandbox API for client demo
+    _fallbackCatalogueWa(name, phone);
+    
+    btn.innerHTML = originalText;
+    btn.disabled = false;
+    setTimeout(() => { _catalogueSubmitting = false; }, 3000);
 }
 
 function _fallbackCatalogueWa(name, phone) {
