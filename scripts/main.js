@@ -281,10 +281,12 @@ async function requestCatalogue(e) {
             trackEvent('catalogue_sent', 'lead', 'auto_whatsapp_success');
         } else {
             console.warn('[catalogue] API error, using fallback:', data.error);
+        alert('DEBUG API ERROR: ' + data.error);
             _fallbackCatalogueWa(name, phone);
         }
     } catch (err) {
         console.warn('[catalogue] Network error, using fallback:', err);
+        alert('DEBUG ERROR: ' + err.message);
         _fallbackCatalogueWa(name, phone);
     } finally {
         btn.innerHTML = originalText;
