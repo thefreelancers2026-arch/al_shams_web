@@ -7,15 +7,9 @@
 
 export default async function handler(req, res) {
 
-    // ── CORS: only allow requests from our own domain ──────────────────────────
-    const allowedOrigins = [
-        'https://al-shams-web-5zdk.vercel.app',
-        'http://localhost:3000', // local dev
-    ];
-    const origin = req.headers.origin || '';
-    if (allowedOrigins.includes(origin)) {
-        res.setHeader('Access-Control-Allow-Origin', origin);
-    }
+    // ── CORS: allow any origin for this public lead-gen endpoint ──
+    const origin = req.headers.origin || '*';
+    res.setHeader('Access-Control-Allow-Origin', origin);
     res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS');
     res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
     res.setHeader('Vary', 'Origin');
