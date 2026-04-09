@@ -12,6 +12,18 @@ function trackEvent(eventName, eventCategory, eventLabel) {
     }
 }
 
+// SECURITY: Escape any special HTML characters before injecting dynamic data into the DOM.
+// This prevents XSS (Cross-Site Scripting) attacks if data ever comes from an untrusted source.
+function escapeHTML(str) {
+    if (str === null || str === undefined) return '';
+    return String(str)
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#x27;');
+}
+
 // 2. STATE & DATA
 let catalogData = [];
 // Parse wishlist from localStorage — validate it's always an Array to prevent corrupted/old
@@ -110,20 +122,28 @@ function renderCatalog(filter = 'All') {
         return;
     }
 
-    data.forEach(item => {
+    // Build all HTML first, then set innerHTML ONCE — faster and avoids repeated DOM re-parsing.
+    // All dynamic values are passed through escapeHTML() to prevent XSS injection.
+    const html = data.map(item => {
         const isLiked = wishlist.includes(item.id);
-        strip.innerHTML += `
+        return `
             <div class="collection-card">
-                <button class="wishlist-heart-btn ${isLiked ? 'liked' : ''}" onclick="event.stopPropagation(); toggleWishlistItem('${item.id}')" aria-label="Add to Selections">
+                <button class="wishlist-heart-btn ${isLiked ? 'liked' : ''}" onclick="event.stopPropagation(); toggleWishlistItem('${escapeHTML(item.id)}')" aria-label="Add to Selections">
                     <i data-feather="heart"></i>
                 </button>
-                <img src="${item.image}" alt="${item.title}" loading="lazy" decoding="async" onerror="imageFallback(this)">
+                <img src="${escapeHTML(item.image)}" alt="${escapeHTML(item.title)}" loading="lazy" decoding="async" data-fallback="true">
                 <div class="collection-info">
-                    <h3>${item.title}</h3>
-                    <p>${item.category}</p>
+                    <h3>${escapeHTML(item.title)}</h3>
+                    <p>${escapeHTML(item.category)}</p>
                 </div>
             </div>
         `;
+    }).join('');
+    strip.innerHTML = html;
+
+    // Fix #3: Safe event delegation instead of inline onerror attribute
+    strip.querySelectorAll('img[data-fallback]').forEach(img => {
+        img.addEventListener('error', () => imageFallback(img), { once: true });
     });
 
     feather.replace();
@@ -159,17 +179,25 @@ function updateWishlistUI() {
         return;
     }
 
-    wishlist.forEach(id => {
+    // Same pattern: build full HTML string first, then assign once to avoid repeated DOM re-parsing.
+    const wishHtml = wishlist.map(id => {
         const p = catalogData.find(c => c.id === id);
-        if(!p) return;
-        container.innerHTML += `
+        if (!p) return '';
+        return `
             <div class="wish-item">
-                <img src="${p.image}" alt="${p.title}" loading="lazy" decoding="async" onerror="imageFallback(this)">
-                <div class="wish-item-info"><h4>${p.title}</h4><p>${p.category}</p></div>
-                <button class="remove-btn" onclick="removeFromWishlist('${p.id}')" aria-label="Remove item"><i data-feather="trash-2" style="width:18px;"></i></button>
+                <img src="${escapeHTML(p.image)}" alt="${escapeHTML(p.title)}" loading="lazy" decoding="async" data-fallback="true">
+                <div class="wish-item-info"><h4>${escapeHTML(p.title)}</h4><p>${escapeHTML(p.category)}</p></div>
+                <button class="remove-btn" onclick="removeFromWishlist('${escapeHTML(p.id)}')" aria-label="Remove item"><i data-feather="trash-2" style="width:18px;"></i></button>
             </div>
         `;
+    }).join('');
+    container.innerHTML = wishHtml;
+
+    // Fix #3: Safe event delegation instead of inline onerror attribute
+    container.querySelectorAll('img[data-fallback]').forEach(img => {
+        img.addEventListener('error', () => imageFallback(img), { once: true });
     });
+
     feather.replace();
 }
 
@@ -198,7 +226,14 @@ let _catalogueSubmitting = false;
 function requestCatalogue(e) {
     e.preventDefault();
 
-    // 1. Prevent double submission
+    // Fix #7: Persistent 60-second rate limit using localStorage
+    const lastSent = parseInt(localStorage.getItem('cat_last_sent') || '0');
+    if (Date.now() - lastSent < 60000) {
+        showToast("Please wait a moment before requesting again.");
+        return;
+    }
+
+    // 1. Prevent double submission within current session
     if (_catalogueSubmitting) return;
     _catalogueSubmitting = true;
     setTimeout(() => { _catalogueSubmitting = false; }, 3000);
@@ -238,7 +273,8 @@ function requestCatalogue(e) {
         return;
     }
 
-    // Success
+    // Success — record timestamp for rate limiting
+    localStorage.setItem('cat_last_sent', String(Date.now()));
     form.reset();
     showToast("Catalogue request sent via WhatsApp ✓");
 }
@@ -248,6 +284,13 @@ async function handleEnquirySubmit(e) {
     const form = e.target;
     const btn = form.querySelector('button[type="submit"]');
     
+    // Fix #8: Validate phone number before submitting
+    const rawPhone = (form.elements['phone'].value || '').replace(/\D/g, '').slice(-10);
+    if (rawPhone.length < 10) {
+        showToast("Please enter a valid 10-digit phone number.");
+        return;
+    }
+
     // Store original button text
     const originalText = btn.innerHTML;
     btn.innerHTML = 'Sending Enquiry...';

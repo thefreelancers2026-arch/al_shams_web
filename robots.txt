@@ -1,0 +1,7 @@
+User-agent: *
+Allow: /
+Disallow: /data/
+Disallow: /images/convert.py
+Disallow: /scripts/
+
+Sitemap: https://al-shams-web-5zdk.vercel.app/sitemap.xml

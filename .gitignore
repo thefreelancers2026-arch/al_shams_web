@@ -1,0 +1,33 @@
+# Environment variables — NEVER commit these
+.env
+.env.local
+.env.production
+.env.*
+
+# Python dev tools (not needed on live server)
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+.Python
+
+# OS generated files
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Editor directories
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Vercel local dev
+.vercel
+
+# Logs
+*.log
+npm-debug.log*
+
+# Large binary assets (PDFs should be hosted on Drive, not git)
+*.pdf
