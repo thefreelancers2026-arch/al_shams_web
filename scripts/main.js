@@ -228,26 +228,24 @@ function checkoutWishlist(e) {
 // Double-submission guard
 let _catalogueSubmitting = false;
 
-function requestCatalogue(e) {
+async function requestCatalogue(e) {
     e.preventDefault();
 
-    // Fix #7: Persistent 60-second rate limit using localStorage
+    // Persistent 60-second rate limit using localStorage
     const lastSent = parseInt(localStorage.getItem('cat_last_sent') || '0');
     if (Date.now() - lastSent < 60000) {
         showToast("Please wait a moment before requesting again.");
         return;
     }
 
-    // 1. Prevent double submission within current session
     if (_catalogueSubmitting) return;
     _catalogueSubmitting = true;
-    setTimeout(() => { _catalogueSubmitting = false; }, 3000);
 
     const form = e.target;
+    const btn = form.querySelector('button[type="submit"]');
     const rawName  = document.getElementById('catName').value.trim();
     const rawPhone = document.getElementById('catPhone').value.trim();
 
-    // 2. Sanitize name — allow only letters and spaces
     const name = rawName.replace(/[^a-zA-Z\s]/g, '').trim();
     if (!name) {
         showToast("Please enter a valid name (letters only).");
@@ -255,33 +253,51 @@ function requestCatalogue(e) {
         return;
     }
 
-    // 3. Normalize phone — strip non-digits, keep last 10
-    const phoneDigits = rawPhone.replace(/\D/g, '');
-    const phone = phoneDigits.slice(-10);
+    const phone = rawPhone.replace(/\D/g, '').slice(-10);
     if (phone.length < 10) {
         showToast("Please enter a valid 10-digit phone number.");
         _catalogueSubmitting = false;
         return;
     }
 
-    // Build message
-    const msg = `*Catalogue Request*\n\nHi, I'm *${name}*.\nI would like to receive your full catalogue.\n\nMy number: +91${phone}`;
+    const originalText = btn.innerHTML;
+    btn.innerHTML = 'Sending Catalogue...';
+    btn.disabled = true;
 
-    // Analytics
-    trackEvent('request_catalogue', 'lead', 'whatsapp_catalog');
+    trackEvent('request_catalogue', 'lead', 'whatsapp_catalog_auto');
 
-    // 4. Open WhatsApp with popup-blocked detection
-    const waWindow = window.open(`https://wa.me/919500208677?text=${encodeURIComponent(msg)}`, '_blank');
-    if (!waWindow || waWindow.closed || typeof waWindow.closed === 'undefined') {
-        showToast("Please allow popups to continue.");
-        _catalogueSubmitting = false;
-        return;
+    try {
+        const response = await fetch('/api/send-catalogue', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ name, phone }),
+        });
+        const data = await response.json();
+
+        if (response.ok && data.success) {
+            localStorage.setItem('cat_last_sent', String(Date.now()));
+            form.reset();
+            showToast("Catalogue sent to your WhatsApp ✓");
+            trackEvent('catalogue_sent', 'lead', 'auto_whatsapp_success');
+        } else {
+            console.warn('[catalogue] API error, using fallback:', data.error);
+            _fallbackCatalogueWa(name, phone);
+        }
+    } catch (err) {
+        console.warn('[catalogue] Network error, using fallback:', err);
+        _fallbackCatalogueWa(name, phone);
+    } finally {
+        btn.innerHTML = originalText;
+        btn.disabled = false;
+        setTimeout(() => { _catalogueSubmitting = false; }, 3000);
     }
+}
 
-    // Success — record timestamp for rate limiting
+function _fallbackCatalogueWa(name, phone) {
+    const msg = `*Catalogue Request*\n\nHi, I'm *${name}*.\nI would like to receive your full catalogue.\n\nMy number: +91${phone}`;
+    showToast("Opening WhatsApp - please send the message to receive your catalogue.");
+    window.open(`https://wa.me/919500208677?text=${encodeURIComponent(msg)}`, '_blank', 'noopener,noreferrer');
     localStorage.setItem('cat_last_sent', String(Date.now()));
-    form.reset();
-    showToast("Catalogue request sent via WhatsApp ✓");
 }
 
 async function handleEnquirySubmit(e) {
